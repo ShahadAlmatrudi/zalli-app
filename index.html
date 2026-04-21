@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZALLI Smart Window Film Simulation</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#simulator" aria-label="ZALLI home">
+        <img src="assets/zalli-logo.png" alt="ZALLI logo" />
+        <span>
+          <strong>ZALLI</strong>
+          <small>Smart Window Film</small>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#simulator">Simulation</a>
+        <a href="#calculator">Calculator</a>
+        <a href="#service">Service</a>
+        <a href="#insights">Savings</a>
+        <a href="#story">Project</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="sim-shell" id="simulator">
+        <div class="sim-copy">
+          <p class="eyebrow">Smart Heat Control • Better Comfort • Greater Savings</p>
+          <h1>Show how ZALLI cools a room before the customer buys it.</h1>
+          <p>
+            Estimate your room temperature, compare results with and without ZALLI, and
+            see how smart window film can improve comfort while reducing AC use and
+            monthly electricity cost.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button primary" href="#calculator">Try calculator</a>
+            <a class="button ghost" href="#service">Book service</a>
+            <button class="button ghost" id="resetBtn" type="button">Reset demo</button>
+          </div>
+        </div>
+
+        <section class="control-panel" aria-label="Simulation controls">
+          <div class="panel-heading">
+            <span>Live Inputs</span>
+            <strong id="scenarioLabel">Dorm room</strong>
+          </div>
+
+          <div class="room-picker" role="group" aria-label="Room type">
+            <button class="chip active" type="button" data-room="dorm">Dorm</button>
+            <button class="chip" type="button" data-room="car">Car</button>
+            <button class="chip" type="button" data-room="home">Home</button>
+          </div>
+
+          <label class="slider-row" for="sunInput">
+            <span>Sunlight intensity</span>
+            <output id="sunOutput">85%</output>
+            <input id="sunInput" type="range" min="40" max="100" value="85" />
+          </label>
+
+          <label class="slider-row" for="outsideInput">
+            <span>Outside temperature</span>
+            <output id="outsideOutput">43°C</output>
+            <input id="outsideInput" type="range" min="28" max="50" value="43" />
+          </label>
+
+          <label class="slider-row" for="windowInput">
+            <span>Window area</span>
+            <output id="windowOutput">6 m²</output>
+            <input id="windowInput" type="range" min="1" max="14" value="6" />
+          </label>
+
+          <label class="slider-row" for="hoursInput">
+            <span>AC use per day</span>
+            <output id="hoursOutput">9 h</output>
+            <input id="hoursInput" type="range" min="2" max="18" value="9" />
+          </label>
+        </section>
+      </section>
+
+      <section class="visual-grid" aria-label="Before and after heat simulation">
+        <article class="window-stage before">
+          <div class="stage-label">
+            <span>Without ZALLI</span>
+            <strong id="beforeTemp">34.8°C</strong>
+          </div>
+          <div class="window-visual hot" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="glass"></div>
+            <div class="heat-lines"></div>
+            <div class="room-silhouette"></div>
+          </div>
+          <p>Direct sunlight enters the room, heat builds up, and the AC works harder.</p>
+        </article>
+
+        <article class="window-stage after">
+          <div class="stage-label">
+            <span>With ZALLI film</span>
+            <strong id="afterTemp">29.4°C</strong>
+          </div>
+          <div class="window-visual cool" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="glass film"></div>
+            <div class="cool-lines"></div>
+            <div class="room-silhouette"></div>
+          </div>
+          <p>The removable smart film blocks part of the heat transfer and improves comfort.</p>
+        </article>
+      </section>
+
+      <section class="metrics-band" id="insights" aria-label="Savings metrics">
+        <div class="metric">
+          <span>Temperature drop</span>
+          <strong id="tempDrop">5.4°C</strong>
+        </div>
+        <div class="metric">
+          <span>AC energy saved</span>
+          <strong id="kwhSaved">105 kWh</strong>
+        </div>
+        <div class="metric">
+          <span>Monthly cost saved</span>
+          <strong id="costSaved">19.0 SAR</strong>
+        </div>
+        <div class="metric">
+          <span>Comfort score</span>
+          <strong id="comfortScore">82%</strong>
+        </div>
+      </section>
+
+      <section class="calculator" id="calculator">
+        <div class="section-heading">
+          <p class="eyebrow">CUSTOMER SAVINGS RECOMMENDATION</p>
+          <h2>Generate a ZALLI recommendation for any room.</h2>
+        </div>
+
+        <div class="calculator-grid">
+          <form class="case-form" id="caseForm">
+            <label>
+              <span>Customer / place name</span>
+              <input id="placeName" type="text" value="Student dorm room" />
+            </label>
+
+            <label>
+              <span>Window width (meters)</span>
+              <input id="calcWidth" type="number" min="0.5" max="8" step="0.1" value="2.4" />
+            </label>
+
+            <label>
+              <span>Window height (meters)</span>
+              <input id="calcHeight" type="number" min="0.5" max="4" step="0.1" value="1.8" />
+            </label>
+
+            <label>
+              <span>Current indoor temperature (°C)</span>
+              <input id="currentTemp" type="number" min="22" max="50" step="0.5" value="34" />
+            </label>
+
+            <label>
+              <span>Target comfortable temperature (°C)</span>
+              <input id="targetTemp" type="number" min="18" max="30" step="0.5" value="25" />
+            </label>
+
+            <label>
+              <span>AC usage per day (hours)</span>
+              <input id="calcHours" type="number" min="1" max="24" step="1" value="10" />
+            </label>
+
+            <label>
+              <span>Electricity price (SAR / kWh)</span>
+              <input id="priceKwh" type="number" min="0.05" max="1" step="0.01" value="0.18" />
+            </label>
+
+            <label>
+              <span>ZALLI coverage level</span>
+              <select id="coverageLevel">
+                <option value="0.65">Standard film - 65%</option>
+                <option value="0.78" selected>Smart film - 78%</option>
+                <option value="0.88">Premium film - 88%</option>
+              </select>
+            </label>
+
+            <div class="form-actions">
+              <button class="button primary" type="submit">Generate report</button>
+              <button class="button ghost" id="clearCaseBtn" type="button">Clear inputs</button>
+            </div>
+          </form>
+
+          <article class="report-card" aria-live="polite">
+            <div class="report-top">
+              <span>ZALLI Recommendation</span>
+              <strong id="reportStatus">Strong fit</strong>
+            </div>
+            <h3 id="reportTitle">Student dorm room</h3>
+            <p id="reportSummary">
+              ZALLI is recommended because the room has strong heat gain through glass and
+              long daily AC usage.
+            </p>
+
+            <div class="report-metrics">
+              <div>
+                <span>Film needed</span>
+                <strong id="filmArea">4.3 m²</strong>
+              </div>
+              <div>
+                <span>New indoor temp</span>
+                <strong id="newTemp">28.7°C</strong>
+              </div>
+              <div>
+                <span>Monthly saving</span>
+                <strong id="monthlySaving">22.1 SAR</strong>
+              </div>
+              <div>
+                <span>Payback estimate</span>
+                <strong id="payback">11 months</strong>
+              </div>
+            </div>
+
+            <div class="recommendation-bar">
+              <span id="recommendationFill"></span>
+            </div>
+
+            <div class="script-box">
+              <span>Presentation explanation</span>
+              <p id="talkingPoint">
+                For this dorm room, ZALLI covers the main window area and can reduce the
+                indoor temperature by about 5.3°C, making the AC work less and lowering
+                monthly electricity cost.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="service" id="service">
+        <div class="section-heading">
+          <p class="eyebrow">Delivery & On-Site Service</p>
+          <h2>Offer delivery, measurement, installation, and protection service.</h2>
+          <p>
+            ZALLI can deliver the film to customers or send a team to measure windows,
+            install the smart film, and add protection options. This makes the idea easier
+            to trust because customers can choose the support level they need.
+          </p>
+        </div>
+
+        <div class="service-grid">
+          <form class="service-form" id="serviceForm">
+            <label>
+              <span>Customer name</span>
+              <input id="serviceName" type="text" placeholder="Enter customer name" required />
+            </label>
+
+            <label>
+              <span>Mobile number</span>
+              <input id="servicePhone" type="tel" placeholder="05xxxxxxxx" required />
+            </label>
+
+            <label>
+              <span>City</span>
+              <select id="serviceCity" required>
+                <option value="" selected disabled>Select city</option>
+                <option value="Riyadh">Riyadh</option>
+                <option value="Jeddah">Jeddah</option>
+                <option value="Dammam">Dammam</option>
+                <option value="Khobar">Khobar</option>
+                <option value="Dhahran">Dhahran</option>
+                <option value="Makkah">Makkah</option>
+                <option value="Madinah">Madinah</option>
+                <option value="Taif">Taif</option>
+                <option value="Abha">Abha</option>
+                <option value="Khamis Mushait">Khamis Mushait</option>
+                <option value="Tabuk">Tabuk</option>
+                <option value="Hail">Hail</option>
+                <option value="Qassim">Qassim</option>
+                <option value="Buraidah">Buraidah</option>
+                <option value="Unaizah">Unaizah</option>
+                <option value="Al Ahsa">Al Ahsa</option>
+                <option value="Jubail">Jubail</option>
+                <option value="Yanbu">Yanbu</option>
+                <option value="Najran">Najran</option>
+                <option value="Jazan">Jazan</option>
+                <option value="Al Baha">Al Baha</option>
+                <option value="Sakaka">Sakaka</option>
+                <option value="Arar">Arar</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Neighborhood / address</span>
+              <input id="serviceAddress" type="text" placeholder="Example: Al Yasmin district" required />
+            </label>
+
+            <label>
+              <span>Service type</span>
+              <select id="serviceType" required>
+                <option value="" selected disabled>Select service</option>
+                <option value="delivery">Product delivery only</option>
+                <option value="deliveryInstall">Delivery + installation</option>
+                <option value="measure">Measurement visit</option>
+                <option value="install">Film installation</option>
+                <option value="replace">Film replacement</option>
+                <option value="protect">Film + window protection</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Number of windows</span>
+              <input id="serviceWindows" type="number" min="1" max="30" step="1" placeholder="Example: 4" required />
+            </label>
+
+            <label>
+              <span>Average window area (m²)</span>
+              <input id="serviceArea" type="number" min="0.5" max="8" step="0.1" placeholder="Example: 2.2" required />
+            </label>
+
+            <label>
+              <span>Visit speed</span>
+              <select id="serviceSpeed" required>
+                <option value="" selected disabled>Select visit speed</option>
+                <option value="standard">Standard - within 3 days</option>
+                <option value="fast">Fast - next day</option>
+                <option value="urgent">Urgent - same day</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Delivery option</span>
+              <select id="deliveryOption" required>
+                <option value="" selected disabled>Select delivery</option>
+                <option value="none">No delivery needed</option>
+                <option value="pickup">Customer pickup - free</option>
+                <option value="standard">Home delivery - standard</option>
+                <option value="express">Home delivery - express</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Package size</span>
+              <select id="packageSize" required>
+                <option value="" selected disabled>Select package</option>
+                <option value="small">Small roll</option>
+                <option value="medium">Medium roll</option>
+                <option value="large">Large roll</option>
+              </select>
+            </label>
+
+            <label class="check-row">
+              <input id="serviceWarranty" type="checkbox" />
+              <span>Add cleaning kit and 1-year care check</span>
+            </label>
+
+            <button class="button primary full" type="submit">Create service plan</button>
+
+            <div class="created-confirmation" id="serviceConfirmation" hidden>
+              <div>
+                <span>Plan created</span>
+                <strong id="serviceOrderId">ZL-10428</strong>
+              </div>
+              <p id="serviceConfirmText">
+                The customer service plan is ready. A ZALLI coordinator can confirm the
+                appointment and send the quote to the customer.
+              </p>
+            </div>
+          </form>
+
+          <article class="service-card" aria-live="polite">
+            <div class="report-top">
+              <span>Service Plan</span>
+              <strong id="serviceBadge">Waiting</strong>
+            </div>
+
+            <h3 id="serviceTitle">Enter customer details</h3>
+            <p id="serviceSummary">
+              Fill the request form, then click Create service plan to generate the delivery
+              or installation quote.
+            </p>
+
+            <div class="service-timeline">
+              <div>
+                <span>1</span>
+                <strong>Measure</strong>
+                <p>Confirm glass size and sunlight direction.</p>
+              </div>
+              <div>
+                <span>2</span>
+                <strong>Install</strong>
+                <p>Apply smart film and window protection.</p>
+              </div>
+              <div>
+                <span>3</span>
+                <strong>Activate</strong>
+                <p>Set up the app and show savings dashboard.</p>
+              </div>
+            </div>
+
+            <div class="report-metrics service-metrics">
+              <div>
+                <span>Total glass area</span>
+                <strong id="serviceTotalArea">--</strong>
+              </div>
+              <div>
+                <span>Estimated visit time</span>
+                <strong id="serviceTime">--</strong>
+              </div>
+              <div>
+                <span>Delivery fee</span>
+                <strong id="deliveryFee">--</strong>
+              </div>
+              <div>
+                <span>Total quote</span>
+                <strong id="serviceQuote">--</strong>
+              </div>
+              <div>
+                <span>Fulfillment date</span>
+                <strong id="serviceDate">--</strong>
+              </div>
+              <div>
+                <span>Package</span>
+                <strong id="packageLabel">--</strong>
+              </div>
+            </div>
+
+            <div class="script-box">
+              <span>Order note</span>
+              <p id="serviceTalkingPoint">
+                Your delivery or service details will appear here after creating the plan.
+              </p>
+            </div>
+
+            <div class="next-steps" id="serviceNextSteps" hidden>
+              <span>Next steps after creation</span>
+              <ul>
+                <li>Send quote and appointment time to the customer.</li>
+                <li>Prepare the selected film package for delivery.</li>
+                <li>Assign a ZALLI technician if installation is included.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="app-preview" aria-label="Companion app concept">
+        <div class="phone">
+          <div class="phone-status"></div>
+          <div class="phone-logo">
+            <img src="assets/zalli-logo.png" alt="" />
+            <span>ZALLI</span>
+          </div>
+          <div class="phone-gauge">
+            <span id="gaugeValue">82%</span>
+            <small>comfort</small>
+          </div>
+          <div class="phone-list">
+            <p><span>Heat blocked</span><strong id="heatBlocked">42%</strong></p>
+            <p><span>Bill saved</span><strong id="phoneCost">19.0 SAR</strong></p>
+            <p><span>Best place</span><strong id="bestPlace">Dorm windows</strong></p>
+          </div>
+        </div>
+
+        <div class="preview-copy">
+          <p class="eyebrow">Companion Mobile App</p>
+          <h2>Make savings visible to customers.</h2>
+          <p>
+            ZALLI can be more than a film. The app helps users see real value by tracking
+            estimated temperature reduction, electricity savings, and money saved over time.
+          </p>
+          <div class="feature-list">
+            <article>
+              <span>01</span>
+              <h3>Quick setup</h3>
+              <p>Choose room type, window size, and daily AC usage.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Live estimate</h3>
+              <p>Compare indoor temperature before and after using the film.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Customer proof</h3>
+              <p>Show monthly energy and cost savings in a simple dashboard.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="story" id="story">
+        <div>
+          <p class="eyebrow">Inside ZALLI</p>
+          <h2>Everything the customer needs after choosing ZALLI.</h2>
+        </div>
+        <div class="story-columns">
+          <article>
+            <h3>Track comfort</h3>
+            <p>
+              View estimated room temperature, heat reduction, and comfort score in one
+              simple dashboard.
+            </p>
+          </article>
+          <article>
+            <h3>Manage service</h3>
+            <p>
+              Book delivery, measurement, installation, replacement, or window protection
+              from the same app.
+            </p>
+          </article>
+          <article>
+            <h3>See savings</h3>
+            <p>
+              Follow monthly electricity savings and understand how much value the smart
+              film creates over time.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
